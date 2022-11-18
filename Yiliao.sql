@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2022-11-11 22:11:09                          */
+/* Created on:     2022-11-18 17:25:29                          */
 /*==============================================================*/
 
 
@@ -47,6 +47,7 @@ create table record
    Time                 char(30),
    Vedio                varchar(60),
    Place                varchar(60),
+   Proposal             varchar(60),
    primary key (CID)
 );
 
