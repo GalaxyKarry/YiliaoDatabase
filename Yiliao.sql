@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2022-11-20 0:37:16                           */
+/* Created on:     2022-11-20 22:25:35                          */
 /*==============================================================*/
 
 
@@ -68,7 +68,8 @@ create table Widgets
    WId                  int not null,
    LcId                 int not null,
    Subtitle             varchar(20),
-   WContent             longtext,
+   WContent             varchar(60),
+   WImage               longblob,
    primary key (WId)
 );
 
