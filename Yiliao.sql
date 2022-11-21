@@ -1,37 +1,49 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2022-11-20 22:25:35                          */
+/* Created on:     2022-11-21 11:03:15                          */
 /*==============================================================*/
 
 
-drop table if exists Carousel_chart;
+drop table if exists CarouselChart;
 
-drop table if exists Large_components;
+drop table if exists Feedback;
 
-drop table if exists Tips;
+drop table if exists LargeComponents;
+
+drop table if exists Record;
 
 drop table if exists User;
 
 drop table if exists Widgets;
 
-drop table if exists feedback;
-
-drop table if exists record;
-
 /*==============================================================*/
-/* Table: Carousel_chart                                        */
+/* Table: CarouselChart                                         */
 /*==============================================================*/
-create table Carousel_chart
+create table CarouselChart
 (
    CarId                int not null,
    CarImage             longblob,
+   COrder               int,
    primary key (CarId)
 );
 
 /*==============================================================*/
-/* Table: Large_components                                      */
+/* Table: Feedback                                              */
 /*==============================================================*/
-create table Large_components
+create table Feedback
+(
+   FID                  int not null,
+   CID                  int not null,
+   UID                  int not null,
+   Contect              varchar(200),
+   Picture              longblob,
+   primary key (FID, UID)
+);
+
+/*==============================================================*/
+/* Table: LargeComponents                                       */
+/*==============================================================*/
+create table LargeComponents
 (
    LcId                 int not null,
    LcContent            varchar(10),
@@ -39,12 +51,20 @@ create table Large_components
 );
 
 /*==============================================================*/
-/* Table: Tips                                                  */
+/* Table: Record                                                */
 /*==============================================================*/
-create table Tips
+create table Record
 (
-   Tip                  varchar(30) not null,
-   primary key (Tip)
+   CID                  int not null,
+   UID                  int not null,
+   Pass                 int,
+   Time                 char(30),
+   Place                varchar(60),
+   Proposal             varchar(60),
+   Vedio1               varchar(60),
+   Vedio2               varchar(60),
+   Vedio3               varchar(60),
+   primary key (CID)
 );
 
 /*==============================================================*/
@@ -53,10 +73,10 @@ create table Tips
 create table User
 (
    UID                  int not null,
-   Uname                varchar(30),
-   Uphone               varchar(11),
-   Upassword            varchar(30),
-   Uimage               longblob,
+   Uame                 varchar(30),
+   UPhone               varchar(11),
+   UPassword            varchar(30),
+   UPmage               longblob,
    primary key (UID)
 );
 
@@ -73,40 +93,12 @@ create table Widgets
    primary key (WId)
 );
 
-/*==============================================================*/
-/* Table: feedback                                              */
-/*==============================================================*/
-create table feedback
-(
-   FID                  int not null,
-   CID                  int not null,
-   UID                  int not null,
-   contect              varchar(200),
-   picture              longblob,
-   primary key (FID, UID)
-);
+alter table Feedback add constraint FK_RecordFeedback foreign key (CID)
+      references Record (CID) on delete restrict on update restrict;
 
-/*==============================================================*/
-/* Table: record                                                */
-/*==============================================================*/
-create table record
-(
-   CID                  int not null,
-   UID                  int not null,
-   Pass                 int,
-   Time                 char(30),
-   Vedio                varchar(60),
-   Place                varchar(60),
-   Proposal             varchar(60),
-   primary key (CID)
-);
+alter table Record add constraint FK_UserRecord foreign key (UID)
+      references User (UID) on delete restrict on update restrict;
 
 alter table Widgets add constraint FK_Contain foreign key (LcId)
-      references Large_components (LcId) on delete restrict on update restrict;
-
-alter table feedback add constraint FK_RecordFeedback foreign key (CID)
-      references record (CID) on delete restrict on update restrict;
-
-alter table record add constraint FK_UserRecord foreign key (UID)
-      references User (UID) on delete restrict on update restrict;
+      references LargeComponents (LcId) on delete restrict on update restrict;
 
